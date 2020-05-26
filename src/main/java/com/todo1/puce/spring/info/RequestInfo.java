@@ -8,33 +8,20 @@ package com.todo1.puce.spring.info;
  *
  */
 public class RequestInfo {
-
-	String user;
-	String pass;
 	String sessionId;
+	Object objct;
+
 	/**
-	 * @return the user
+	 * @return the objct
 	 */
-	public String getUser() {
-		return user;
+	public Object getObjct() {
+		return objct;
 	}
 	/**
-	 * @param user the user to set
+	 * @param objct the objct to set
 	 */
-	public void setUser(String user) {
-		this.user = user;
-	}
-	/**
-	 * @return the pass
-	 */
-	public String getPass() {
-		return pass;
-	}
-	/**
-	 * @param pass the pass to set
-	 */
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setObjct(Object objct) {
+		this.objct = objct;
 	}
 	/**
 	 * @return the sessionId

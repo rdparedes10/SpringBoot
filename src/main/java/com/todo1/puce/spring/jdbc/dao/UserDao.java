@@ -53,7 +53,21 @@ public class UserDao extends BaseDao {
 		}
 		
 	}
+	public void insert(User user) {
 
+        String sql = "insert into usuario (user, pass, email, cedula) values (?, ?, ?, ?)";
+        this.jdbcTemplate.update(sql, user.getUser(), user.getPass(), user.getEmail(),user.getCedula());
+    }
+    
+    public void update(User user) {
+		String sql = "update usuario set user = ?, pass = ? , email = ?, cedula = ? where user = ?";
+		this.jdbcTemplate.update(sql, user.getUser(), user.getPass(), user.getEmail(),user.getCedula(), user.getUser() );
+	}
+    
+    public void delete(String userName) {
+        String sql = "delete from usuario where user = ?";
+        this.jdbcTemplate.update(sql, userName);
+    }
 	class UserRowMapper implements RowMapper<User> {
 
 		public User mapRow(ResultSet rs, int i) throws SQLException {

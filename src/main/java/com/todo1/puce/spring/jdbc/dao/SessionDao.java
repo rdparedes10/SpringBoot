@@ -46,9 +46,14 @@ public class SessionDao extends BaseDao {
     }
 
     public void insert(Session session) {
-        String sql = "insert into sesion (idSesion) values (?)";
-        this.jdbcTemplate.update(sql, session.getSessionId());
+        String sql = "insert into sesion (idSesion, userName) values (?, ?)";
+        this.jdbcTemplate.update(sql, session.getSessionId(), session.getUserName());
     }
+    
+    public void update(Session session) {
+		String sql = "update vehicle set idSesion = ?, userName = ? where idSesion = ?";
+		this.jdbcTemplate.update(sql, session.getSessionId(), session.getUserName(), session.getSessionId());
+	}
 
     public void delete(String sessionId) {
         String sql = "delete from sesion where idSesion = ?";
@@ -60,6 +65,7 @@ public class SessionDao extends BaseDao {
         public Session mapRow(ResultSet rs, int i) throws SQLException {
             Session s = new Session();
             s.setSessionId(rs.getString("idSesion"));
+            s.setUserName(rs.getString("userName"));
             return s;
         }
 

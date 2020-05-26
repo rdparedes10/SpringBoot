@@ -5,10 +5,12 @@ package com.todo1.puce.business;
 
 import com.todo1.puce.constants.ErrorConstant;
 import com.todo1.puce.constants.MessageConstant;
+import com.todo1.puce.spring.info.RequestInfo;
 import com.todo1.puce.spring.info.ResponseInfo;
 import com.todo1.puce.spring.info.StatusInfo;
 import com.todo1.puce.spring.jdbc.dao.SessionDao;
 import com.todo1.puce.spring.jdbc.model.Session;
+import com.todo1.puce.spring.jdbc.model.User;
 import com.todo1.puce.utils.Utils;
 
 /**
@@ -42,14 +44,32 @@ public class CreateSessionBL {
 	 * @param sessionId - Session Id
 	 * @return - Return True or False
 	 */
-	public boolean validateSession(String sessionId) {
+	public String validateSession(String sessionId) {
 
 		SessionDao sessionDao = new SessionDao();
 		Session session = sessionDao.find(sessionId);
 		if (session != null && session.getSessionId().equals(sessionId)) {
+			return session.getUserName();
+			
+		}
+		return null;
+	}
+
+	/**
+	 * VALIDATE SESSION
+	 * @param sessionId - Session Id
+	 * @return - Return True or False
+	 */
+	public boolean validateSessionLogin(String sessionId, RequestInfo beanRq) {
+
+		SessionDao sessionDao = new SessionDao();
+		Session session = sessionDao.find(sessionId);
+		String userName = ((User)beanRq.getObjct()).getCedula();
+		session.setUserName(userName);
+		if (session != null && session.getSessionId().equals(sessionId)) {
+			sessionDao.update(session);
 			return true;
 		}
 		return false;
 	}
-
 }

@@ -7,80 +7,79 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.todo1.puce.spring.jdbc.model.Vehicle;
+import com.todo1.puce.spring.jdbc.model.Client;
 
 /**
  * @author rparedes
  *
  */
-public class ClientDao {
+public class ClientDao extends BaseDao {
+
 
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public ClientDao() {
+		this.jdbcTemplate = getJdbcTemplate();
 	}
 
-	public List<Vehicle> getListAll() {
+	public List<Client> getListAll() {
 
-		String sql = "select * from vehicle";
+		String sql = "select * from cliente";
 
-		return this.jdbcTemplate.query(sql, new RowMapper<Vehicle>() {
+		return this.jdbcTemplate.query(sql, new RowMapper<Client>() {
 			@Override
-			public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-				Vehicle v = new Vehicle();
-				v.setChassis(rs.getString("ID"));
-				v.setIdBrand(rs.getString("NAME"));
-				v.setLicensePlate(rs.getString("PRICE"));
-				v.setManufacturingDate(rs.getString("PRICE"));
-				return v;
+			public Client mapRow(ResultSet rs, int i) throws SQLException {
+				Client client = new Client();
+				client.setAddress(rs.getString("direccion"));
+				client.setPhone(rs.getString("telefono"));
+				client.setIdInsurance(rs.getString("idSeguro"));
+				client.setName(rs.getString("nombre"));
+				client.setLastname(rs.getString("apellido"));
+				client.setId(rs.getString("cedula"));
+				return client;
 			}
 		});
 	}
 
-	public Integer totalVehicule() {
-		String sql = "select count(*) from vehicle";
-		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	public Client find(String client) {
+		String sql = "select * from cliente where cedula = ? ";
+		try {
+			return this.jdbcTemplate.queryForObject(sql, new ClientRowMapper(), client);
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
+	public void insert(Client client) {
 
-	public Vehicle find(Integer id) {
-		String sql = "select * from vehicle where ID = ?";
-		return this.jdbcTemplate.queryForObject(sql, new VehicleRowMapper(), id);
+        String sql = "insert into cliente (cedula, nombre, apellido, direccion, telefono, idSeguro) values (?, ?, ?, ?, ?, ?)";
+        this.jdbcTemplate.update(sql, client.getId(), client.getName(), client.getLastname(), client.getAddress(), client.getPhone(), client.getIdInsurance());
+    }
+    
+    public void update(Client client) {
+		String sql = "update cliente set cedula = ?, nombre = ? , apellido = ?, direccion = ? , telefono = ? , idSeguro= ?  where cedula = ?";
+		 this.jdbcTemplate.update(sql, client.getId(), client.getName(), client.getLastname(), client.getAddress(), client.getPhone(), client.getIdInsurance(), client.getId());
 	}
+    
+    public void delete(String cedula) {
+        String sql = "delete from cliente where cedula = ?";
+        this.jdbcTemplate.update(sql, cedula);
+    }
+	class ClientRowMapper implements RowMapper<Client> {
 
-	public void insert(Vehicle vehicle) {
-		String sql = "insert into vehicle (ID, NAME, PRICE) values (?, ?, ?)";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
-	}
-
-	public void update(Vehicle vehicle) {
-		String sql = "update vehicle set NAME = ?, PRICE = ? where ID = ?";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
-	}
-
-	public void delete(String chassis) {
-		String sql = "delete from vehicle where ID = ?";
-		this.jdbcTemplate.update(sql, chassis);
-	}
-
-	class VehicleRowMapper implements RowMapper<Vehicle> {
-
-		public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-			Vehicle v = new Vehicle();
-			v.setChassis(rs.getString("ID"));
-			v.setIdBrand(rs.getString("NAME"));
-			v.setLicensePlate(rs.getString("PRICE"));
-			v.setManufacturingDate(rs.getString("PRICE"));
-			return v;
+		public Client mapRow(ResultSet rs, int i) throws SQLException {
+			Client client = new Client();
+			client.setAddress(rs.getString("direccion"));
+			client.setPhone(rs.getString("telefono"));
+			client.setIdInsurance(rs.getString("idSeguro"));
+			client.setName(rs.getString("nombre"));
+			client.setLastname(rs.getString("apellido"));
+			client.setId(rs.getString("cedula"));
+			return client;
 		}
 
 	}

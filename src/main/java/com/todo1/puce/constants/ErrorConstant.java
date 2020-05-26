@@ -14,6 +14,8 @@ public class ErrorConstant {
 	public static final String ERROR = "ERROR";
 	public static final String ERROR_CODE_GENERAL = "503";
 	public static final String ERROR_CODE_LOGIN = "E001";
+	public static final String ERROR_CODE_REGISTER_USER = "E002";
+	public static final String ERROR_CODE_REGISTER_ACCIDENT= "E003";
 	public static final String ERROR_GENERAL = "ERROR IN JSON";
 
 }
