@@ -35,6 +35,7 @@
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/constants/ErrorConstant.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/model/Client.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/model/Brand.java
+/Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/info/RegisterAccidentRq.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/business/CreateSessionBL.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/business/RegisterAccidentBL.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/model/User.java

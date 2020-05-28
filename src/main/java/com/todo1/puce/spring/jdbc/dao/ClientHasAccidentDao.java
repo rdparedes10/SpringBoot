@@ -7,82 +7,71 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.todo1.puce.spring.jdbc.model.Vehicle;
+import com.todo1.puce.spring.jdbc.model.ClientHasAccident;
 
 /**
  * @author rparedes
  *
  */
-public class ClientHasAccidentDao {
-
+public class ClientHasAccidentDao extends BaseDao {
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public ClientHasAccidentDao() {
+		this.jdbcTemplate = getJdbcTemplate();
 	}
 
-	public List<Vehicle> getListAll() {
+	public List<ClientHasAccident> getListAll() {
 
-		String sql = "select * from vehicle";
+		String sql = "select * from cliente_has_siniestro";
 
-		return this.jdbcTemplate.query(sql, new RowMapper<Vehicle>() {
+		return this.jdbcTemplate.query(sql, new RowMapper<ClientHasAccident>() {
 			@Override
-			public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-				Vehicle v = new Vehicle();
-				v.setChassis(rs.getString("ID"));
-				v.setIdBrand(rs.getString("NAME"));
-				v.setLicensePlate(rs.getString("PRICE"));
-				v.setManufacturingDate(rs.getString("PRICE"));
-				return v;
+			public ClientHasAccident mapRow(ResultSet rs, int i) throws SQLException {
+				ClientHasAccident clientHasAccident = new ClientHasAccident();
+				clientHasAccident.setCod(rs.getString("codS"));
+				clientHasAccident.setId(rs.getString("cedula"));
+				return clientHasAccident;
 			}
 		});
 	}
 
-	public Integer totalVehicule() {
-		String sql = "select count(*) from vehicle";
-		return this.jdbcTemplate.queryForObject(sql, Integer.class);
-	}
-
-	public Vehicle find(Integer id) {
-		String sql = "select * from vehicle where ID = ?";
-		return this.jdbcTemplate.queryForObject(sql, new VehicleRowMapper(), id);
-	}
-
-	public void insert(Vehicle vehicle) {
-		String sql = "insert into vehicle (ID, NAME, PRICE) values (?, ?, ?)";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
-	}
-
-	public void update(Vehicle vehicle) {
-		String sql = "update vehicle set NAME = ?, PRICE = ? where ID = ?";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
-	}
-
-	public void delete(String chassis) {
-		String sql = "delete from vehicle where ID = ?";
-		this.jdbcTemplate.update(sql, chassis);
-	}
-
-	class VehicleRowMapper implements RowMapper<Vehicle> {
-
-		public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-			Vehicle v = new Vehicle();
-			v.setChassis(rs.getString("ID"));
-			v.setIdBrand(rs.getString("NAME"));
-			v.setLicensePlate(rs.getString("PRICE"));
-			v.setManufacturingDate(rs.getString("PRICE"));
-			return v;
+	public ClientHasAccident find(String cod) {
+		String sql = "select * from cliente_has_siniestro where cod = ?";
+		try {
+			return this.jdbcTemplate.queryForObject(sql, new ClientHasAccidentRowMapper(), cod);
+		} catch (Exception e) {
+			return null;
 		}
 
 	}
 
+	public void insert(ClientHasAccident clientHasAccident) {
+
+		String sql = "insert into cliente_has_siniestro (cedula, codS) values (?, ?)";
+		this.jdbcTemplate.update(sql, clientHasAccident.getId(), clientHasAccident.getCod());
+	}
+
+	public void update(ClientHasAccident clientHasAccident) {
+		String sql = "update cliente_has_siniestro set cedula = ?, codS = ?  where cedula = ? and codS = ?";
+		this.jdbcTemplate.update(sql, clientHasAccident.getId(), clientHasAccident.getCod(), clientHasAccident.getId(), clientHasAccident.getCod());
+	}
+
+	public void delete(String cod) {
+		String sql = "delete from cliente_has_siniestro where cod = ?";
+		this.jdbcTemplate.update(sql, cod);
+	}
+
+	class ClientHasAccidentRowMapper implements RowMapper<ClientHasAccident> {
+
+		public ClientHasAccident mapRow(ResultSet rs, int i) throws SQLException {
+			ClientHasAccident clientHasAccident = new ClientHasAccident();
+			clientHasAccident.setCod(rs.getString("codS"));
+			clientHasAccident.setId(rs.getString("cedula"));
+			return clientHasAccident;
+		}
+
+	}
 }

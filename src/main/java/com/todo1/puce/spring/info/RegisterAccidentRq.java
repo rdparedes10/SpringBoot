@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.todo1.puce.spring.jdbc.model;
+package com.todo1.puce.spring.info;
 
 /**
  * @author rparedes
  *
  */
-public class LocationAndAccident {
+public class RegisterAccidentRq {
 
 	private String lon;
 	private String lat;

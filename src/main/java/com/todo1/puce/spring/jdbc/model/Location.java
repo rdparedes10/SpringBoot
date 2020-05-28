@@ -10,7 +10,7 @@ package com.todo1.puce.spring.jdbc.model;
 public class Location {
 	
 	private String id;
-	private String log;
+	private String lon;
 	private String lat;
 	private String codS;
 	/**
@@ -26,16 +26,16 @@ public class Location {
 		this.id = id;
 	}
 	/**
-	 * @return the log
+	 * @return the lon
 	 */
-	public String getLog() {
-		return log;
+	public String getLon() {
+		return lon;
 	}
 	/**
-	 * @param log the log to set
+	 * @param lon the lon to set
 	 */
-	public void setLog(String log) {
-		this.log = log;
+	public void setLon(String lon) {
+		this.lon = lon;
 	}
 	/**
 	 * @return the lat

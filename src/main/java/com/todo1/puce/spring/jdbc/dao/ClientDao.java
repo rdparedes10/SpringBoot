@@ -45,10 +45,10 @@ public class ClientDao extends BaseDao {
 		});
 	}
 
-	public Client find(String client) {
+	public Client find(String id) {
 		String sql = "select * from cliente where cedula = ? ";
 		try {
-			return this.jdbcTemplate.queryForObject(sql, new ClientRowMapper(), client);
+			return this.jdbcTemplate.queryForObject(sql, new ClientRowMapper(), id);
 		} catch (Exception e) {
 			return null;
 		}

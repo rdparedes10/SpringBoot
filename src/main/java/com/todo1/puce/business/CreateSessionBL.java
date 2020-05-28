@@ -10,7 +10,6 @@ import com.todo1.puce.spring.info.ResponseInfo;
 import com.todo1.puce.spring.info.StatusInfo;
 import com.todo1.puce.spring.jdbc.dao.SessionDao;
 import com.todo1.puce.spring.jdbc.model.Session;
-import com.todo1.puce.spring.jdbc.model.User;
 import com.todo1.puce.utils.Utils;
 
 /**
@@ -41,6 +40,7 @@ public class CreateSessionBL {
 
 	/**
 	 * VALIDATE SESSION
+	 * 
 	 * @param sessionId - Session Id
 	 * @return - Return True or False
 	 */
@@ -50,13 +50,13 @@ public class CreateSessionBL {
 		Session session = sessionDao.find(sessionId);
 		if (session != null && session.getSessionId().equals(sessionId)) {
 			return session.getUserName();
-			
 		}
 		return null;
 	}
 
 	/**
 	 * VALIDATE SESSION
+	 * 
 	 * @param sessionId - Session Id
 	 * @return - Return True or False
 	 */
@@ -64,8 +64,24 @@ public class CreateSessionBL {
 
 		SessionDao sessionDao = new SessionDao();
 		Session session = sessionDao.find(sessionId);
-		String userName = ((User)beanRq.getObjct()).getCedula();
+		String userName = beanRq.getUser().getUser();
 		session.setUserName(userName);
+		if (session != null && session.getSessionId().equals(sessionId)) {
+			sessionDao.update(session);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * VALIDATE SESSION REGISTER USER
+	 * 
+	 * @param sessionId - Session Id
+	 * @return - Return True or False
+	 */
+	public boolean validateSessionRegister(String sessionId) {
+		SessionDao sessionDao = new SessionDao();
+		Session session = sessionDao.find(sessionId);
 		if (session != null && session.getSessionId().equals(sessionId)) {
 			sessionDao.update(session);
 			return true;

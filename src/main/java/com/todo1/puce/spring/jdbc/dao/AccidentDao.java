@@ -39,10 +39,10 @@ public class AccidentDao extends BaseDao {
 		});
 	}
 
-	public Accident find(String accident, String pass) {
+	public Accident find(String cod) {
 		String sql = "select * from siniestro where cod = ?";
 		try {
-			return this.jdbcTemplate.queryForObject(sql, new AccidentRowMapper(), accident, pass);
+			return this.jdbcTemplate.queryForObject(sql, new AccidentRowMapper(), cod);
 		} catch (Exception e) {
 			return null;
 		}

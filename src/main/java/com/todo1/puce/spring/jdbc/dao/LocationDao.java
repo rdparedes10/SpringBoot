@@ -7,82 +7,76 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.todo1.puce.spring.jdbc.model.Vehicle;
+import com.todo1.puce.spring.jdbc.model.Location;
 
 /**
  * @author rparedes
  *
  */
-public class LocationDao {
-
+public class LocationDao extends BaseDao {
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public LocationDao() {
+		this.jdbcTemplate = getJdbcTemplate();
 	}
 
-	public List<Vehicle> getListAll() {
+	public List<Location> getListAll() {
 
-		String sql = "select * from vehicle";
+		String sql = "select * from ubicacion";
 
-		return this.jdbcTemplate.query(sql, new RowMapper<Vehicle>() {
+		return this.jdbcTemplate.query(sql, new RowMapper<Location>() {
 			@Override
-			public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-				Vehicle v = new Vehicle();
-				v.setChassis(rs.getString("ID"));
-				v.setIdBrand(rs.getString("NAME"));
-				v.setLicensePlate(rs.getString("PRICE"));
-				v.setManufacturingDate(rs.getString("PRICE"));
-				return v;
+			public Location mapRow(ResultSet rs, int i) throws SQLException {
+				Location location = new Location();
+				location.setId(rs.getString("idUbicacion"));
+				location.setLat(rs.getString("latitud"));
+				location.setLon(rs.getString("longitud"));
+				location.setCodS(rs.getString("codS"));
+				return location;
 			}
 		});
 	}
 
-	public Integer totalVehicule() {
-		String sql = "select count(*) from vehicle";
-		return this.jdbcTemplate.queryForObject(sql, Integer.class);
-	}
-
-	public Vehicle find(Integer id) {
-		String sql = "select * from vehicle where ID = ?";
-		return this.jdbcTemplate.queryForObject(sql, new VehicleRowMapper(), id);
-	}
-
-	public void insert(Vehicle vehicle) {
-		String sql = "insert into vehicle (ID, NAME, PRICE) values (?, ?, ?)";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
-	}
-
-	public void update(Vehicle vehicle) {
-		String sql = "update vehicle set NAME = ?, PRICE = ? where ID = ?";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
-	}
-
-	public void delete(String chassis) {
-		String sql = "delete from vehicle where ID = ?";
-		this.jdbcTemplate.update(sql, chassis);
-	}
-
-	class VehicleRowMapper implements RowMapper<Vehicle> {
-
-		public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-			Vehicle v = new Vehicle();
-			v.setChassis(rs.getString("ID"));
-			v.setIdBrand(rs.getString("NAME"));
-			v.setLicensePlate(rs.getString("PRICE"));
-			v.setManufacturingDate(rs.getString("PRICE"));
-			return v;
+	public Location find(String id) {
+		String sql = "select * from ubicacion where idUbicacion = ?";
+		try {
+			return this.jdbcTemplate.queryForObject(sql, new LocationRowMapper(), id);
+		} catch (Exception e) {
+			return null;
 		}
 
 	}
 
+	public void insert(Location location) {
+
+		String sql = "insert into ubicacion (idUbicacion, longitud, latitud, codS) values (?, ?, ?, ?)";
+		this.jdbcTemplate.update(sql, location.getId(), location.getLon(), location.getLat(), location.getCodS());
+	}
+
+	public void update(Location location) {
+		String sql = "update ubicacion set idUbicacion = ?, longitud = ? , latitud = ?, codS = ? where idUbicacion = ?";
+		this.jdbcTemplate.update(sql, location.getId(), location.getLon(), location.getLat(), location.getCodS(),
+				location.getId());
+	}
+
+	public void delete(String id) {
+		String sql = "delete from ubicacion where idUbicacion = ?";
+		this.jdbcTemplate.update(sql, id);
+	}
+
+	class LocationRowMapper implements RowMapper<Location> {
+
+		public Location mapRow(ResultSet rs, int i) throws SQLException {
+			Location location = new Location();
+			location.setId(rs.getString("idUbicacion"));
+			location.setLat(rs.getString("latitud"));
+			location.setLon(rs.getString("longitud"));
+			location.setCodS(rs.getString("codS"));
+			return location;
+		}
+
+	}
 }

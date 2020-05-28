@@ -35,7 +35,7 @@ public class UserDao extends BaseDao {
 			@Override
 			public User mapRow(ResultSet rs, int i) throws SQLException {
 				User user = new User();
-				user.setCedula(rs.getString("cedula"));
+				user.setCi(rs.getString("cedula"));
 				user.setUser(rs.getString("user"));
 				user.setEmail(rs.getString("email"));
 				user.setPass(rs.getString("pass"));
@@ -53,15 +53,25 @@ public class UserDao extends BaseDao {
 		}
 		
 	}
+	
+	public User find(String user) {
+		String sql = "select * from usuario where user = ?";
+		try {
+			return this.jdbcTemplate.queryForObject(sql, new UserRowMapper(), user);
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
 	public void insert(User user) {
 
         String sql = "insert into usuario (user, pass, email, cedula) values (?, ?, ?, ?)";
-        this.jdbcTemplate.update(sql, user.getUser(), user.getPass(), user.getEmail(),user.getCedula());
+        this.jdbcTemplate.update(sql, user.getUser(), user.getPass(), user.getEmail(),user.getCi());
     }
     
     public void update(User user) {
 		String sql = "update usuario set user = ?, pass = ? , email = ?, cedula = ? where user = ?";
-		this.jdbcTemplate.update(sql, user.getUser(), user.getPass(), user.getEmail(),user.getCedula(), user.getUser() );
+		this.jdbcTemplate.update(sql, user.getUser(), user.getPass(), user.getEmail(),user.getCi(), user.getUser() );
 	}
     
     public void delete(String userName) {
@@ -72,7 +82,7 @@ public class UserDao extends BaseDao {
 
 		public User mapRow(ResultSet rs, int i) throws SQLException {
 			User user = new User();
-			user.setCedula(rs.getString("cedula"));
+			user.setCi(rs.getString("cedula"));
 			user.setUser(rs.getString("user"));
 			user.setEmail(rs.getString("email"));
 			user.setPass(rs.getString("pass"));

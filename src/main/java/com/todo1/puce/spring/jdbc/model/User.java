@@ -12,20 +12,20 @@ public class User {
 	private String user;
 	private String pass;
 	private String email;
-	private String cedula;
+	private String ci;
 	
 	
 	/**
-	 * @return the cedula
+	 * @return the ci
 	 */
-	public String getCedula() {
-		return cedula;
+	public String getCi() {
+		return ci;
 	}
 	/**
-	 * @param cedula the cedula to set
+	 * @param ci the ci to set
 	 */
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
+	public void setCi(String ci) {
+		this.ci = ci;
 	}
 	/**
 	 * @return the user

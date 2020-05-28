@@ -22,14 +22,11 @@ public class LoginBL {
 		StatusInfo statusInfo = new StatusInfo();
 		UserDao userDao = new UserDao();
 
-		String pass = ((User)beanRq.getObjct()).getPass();
-		String userName = ((User)beanRq.getObjct()).getUser();
+		String pass = (beanRq.getUser()).getPass();
+		String userName = (beanRq.getUser()).getUser();
 		User userD = userDao.find(userName, pass);
 
 		if (userD != null) {
-			
-			User userInsert = (User)beanRq.getObjct();
-			userDao.insert(userInsert);
 			statusInfo.setCode(ErrorConstant.SUCCESS_CODE);
 			statusInfo.setMessage(MessageConstant.MESSAGE_SUCCESS_IN_LOGIN);
 			statusInfo.setResult(ErrorConstant.SUCCESS);

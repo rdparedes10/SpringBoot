@@ -69,6 +69,18 @@ public class JsonController {
 	 * @param sessionId - sessionId
 	 * @return - Return True or False
 	 */
+	public boolean validateSessionRegister(String sessionId) {
+		CreateSessionBL session = new CreateSessionBL();
+		return session.validateSessionRegister(sessionId);
+	}
+	
+	/**
+	 * VALIDATE SESSION
+	 * 
+	 * @param request   - request
+	 * @param sessionId - sessionId
+	 * @return - Return True or False
+	 */
 	public String validateSession(String sessionId) {
 		CreateSessionBL session = new CreateSessionBL();
 		return session.validateSession(sessionId);
@@ -103,7 +115,7 @@ public class JsonController {
 	@PostMapping(path = PathConstant.REGISTER_USER, consumes = "application/json", produces = "application/json")
 	public @ResponseBody ResponseInfo registerUser(@RequestBody RequestInfo beanRq, HttpServletRequest request) {
 
-		if (validateSession(beanRq.getSessionId()) != null) {
+		if (validateSessionRegister(beanRq.getSessionId())) {
 			RegisterUserBL business = new RegisterUserBL();
 			ResponseInfo info = business.execute(beanRq);
 			return info;

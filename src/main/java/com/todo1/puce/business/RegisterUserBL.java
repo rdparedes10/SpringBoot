@@ -25,17 +25,17 @@ public class RegisterUserBL {
 		StatusInfo statusInfo = new StatusInfo();
 		UserDao userDao = new UserDao();
 		ClientDao clientDao = new ClientDao();
-		String pass = ((User)beanRq.getObjct()).getPass();
-		String userName = ((User)beanRq.getObjct()).getUser();
+		String pass = beanRq.getUser().getPass();
+		String userName = beanRq.getUser().getUser();
 		User userD = userDao.find(userName, pass);
-		String id = ((User)beanRq.getObjct()).getCedula();
+		String id = beanRq.getUser().getCi();
 		Client client = clientDao.find(id);
 		if (userD == null && client != null) {
 			userD = new User();
 			userD.setUser(userName);
 			userD.setPass(pass);
-			userD.setEmail(((User)beanRq.getObjct()).getEmail());
-			userD.setCedula(id);
+			userD.setEmail(beanRq.getUser().getEmail());
+			userD.setCi(id);
 			statusInfo.setCode(ErrorConstant.SUCCESS_CODE);
 			statusInfo.setMessage(MessageConstant.MESSAGE_SUCCESS_IN_LOGIN);
 			statusInfo.setResult(ErrorConstant.SUCCESS);

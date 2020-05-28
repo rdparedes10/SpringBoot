@@ -51,7 +51,7 @@ public class SessionDao extends BaseDao {
     }
     
     public void update(Session session) {
-		String sql = "update vehicle set idSesion = ?, userName = ? where idSesion = ?";
+		String sql = "update sesion set idSesion = ?, userName = ? where idSesion = ?";
 		this.jdbcTemplate.update(sql, session.getSessionId(), session.getUserName(), session.getSessionId());
 	}
 
