@@ -83,7 +83,6 @@ public class CreateSessionBL {
 		SessionDao sessionDao = new SessionDao();
 		Session session = sessionDao.find(sessionId);
 		if (session != null && session.getSessionId().equals(sessionId)) {
-			sessionDao.update(session);
 			return true;
 		}
 		return false;
