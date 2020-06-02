@@ -53,9 +53,10 @@ public class RegisterUserBL {
 					Client clientInsert = beanRq.getClient();
 					clientDao.insert(clientInsert);
 					insertVehicle(beanRq);
+					client = clientInsert;
 				}
 			}
-
+			
 			if (userD == null && client != null) {
 				userD = new User();
 				userD.setUser(userName);
