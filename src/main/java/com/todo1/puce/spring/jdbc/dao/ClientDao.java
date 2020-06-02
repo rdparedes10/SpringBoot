@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -18,7 +17,6 @@ import com.todo1.puce.spring.jdbc.model.Client;
  *
  */
 public class ClientDao extends BaseDao {
-
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -52,23 +50,27 @@ public class ClientDao extends BaseDao {
 		} catch (Exception e) {
 			return null;
 		}
-		
+
 	}
+
 	public void insert(Client client) {
 
-        String sql = "insert into cliente (cedula, nombre, apellido, direccion, telefono, idSeguro) values (?, ?, ?, ?, ?, ?)";
-        this.jdbcTemplate.update(sql, client.getId(), client.getName(), client.getLastname(), client.getAddress(), client.getPhone(), client.getIdInsurance());
-    }
-    
-    public void update(Client client) {
-		String sql = "update cliente set cedula = ?, nombre = ? , apellido = ?, direccion = ? , telefono = ? , idSeguro= ?  where cedula = ?";
-		 this.jdbcTemplate.update(sql, client.getId(), client.getName(), client.getLastname(), client.getAddress(), client.getPhone(), client.getIdInsurance(), client.getId());
+		String sql = "insert into cliente (cedula, nombre, apellido, direccion, telefono, idSeguro) values (?, ?, ?, ?, ?, ?)";
+		this.jdbcTemplate.update(sql, client.getId(), client.getName(), client.getLastname(), client.getAddress(),
+				client.getPhone(), client.getIdInsurance());
 	}
-    
-    public void delete(String cedula) {
-        String sql = "delete from cliente where cedula = ?";
-        this.jdbcTemplate.update(sql, cedula);
-    }
+
+	public void update(Client client) {
+		String sql = "update cliente set cedula = ?, nombre = ? , apellido = ?, direccion = ? , telefono = ? , idSeguro= ?  where cedula = ?";
+		this.jdbcTemplate.update(sql, client.getId(), client.getName(), client.getLastname(), client.getAddress(),
+				client.getPhone(), client.getIdInsurance(), client.getId());
+	}
+
+	public void delete(String cedula) {
+		String sql = "delete from cliente where cedula = ?";
+		this.jdbcTemplate.update(sql, cedula);
+	}
+
 	class ClientRowMapper implements RowMapper<Client> {
 
 		public Client mapRow(ResultSet rs, int i) throws SQLException {

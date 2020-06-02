@@ -16,10 +16,14 @@ import com.todo1.puce.constants.MessageConstant;
 import com.todo1.puce.spring.info.RequestInfo;
 import com.todo1.puce.spring.info.ResponseInfo;
 import com.todo1.puce.spring.info.StatusInfo;
+import com.todo1.puce.spring.jdbc.dao.BrandDao;
 import com.todo1.puce.spring.jdbc.dao.ClientDao;
 import com.todo1.puce.spring.jdbc.dao.UserDao;
+import com.todo1.puce.spring.jdbc.dao.VehicleDao;
+import com.todo1.puce.spring.jdbc.model.Brand;
 import com.todo1.puce.spring.jdbc.model.Client;
 import com.todo1.puce.spring.jdbc.model.User;
+import com.todo1.puce.spring.jdbc.model.Vehicle;
 import com.todo1.puce.utils.Utils;
 
 /**
@@ -44,6 +48,14 @@ public class RegisterUserBL {
 			User userD = userDao.find(userName, pass);
 			String id = beanRq.getUser().getCi();
 			Client client = clientDao.find(id);
+			if (!beanRq.validateCl()) {
+				if (client == null) {
+					Client clientInsert = beanRq.getClient();
+					clientDao.insert(clientInsert);
+					insertVehicle(beanRq);
+				}
+			}
+
 			if (userD == null && client != null) {
 				userD = new User();
 				userD.setUser(userName);
@@ -91,6 +103,39 @@ public class RegisterUserBL {
 		statusInfo.setCode(ErrorConstant.ERROR_CODE_LOGIN);
 		statusInfo.setMessage(MessageConstant.MESSAGE_ERROR_IN_LOGIN);
 		statusInfo.setResult(ErrorConstant.ERROR);
+	}
+
+	/**
+	 * GET BRAND
+	 * 
+	 * @param beanRq - beanRq
+	 * @return - brand
+	 */
+	public Brand getBrand(RequestInfo beanRq) {
+		BrandDao brandDao = new BrandDao();
+		String brandName = beanRq.getVehicle().getIdBrand().toUpperCase();
+		Brand brand = brandDao.find(brandName);
+		if (brand == null) {
+			brand = new Brand();
+			brand.setIdBrand(brandName);
+			brandDao.insert(brand);
+		}
+		return brand;
+	}
+
+	/**
+	 * INSERT VEHICLE
+	 * 
+	 * @param beanRq - beanRq
+	 */
+	public void insertVehicle(RequestInfo beanRq) {
+
+		Vehicle vehicle = beanRq.getVehicle();
+		VehicleDao vehicleDao = new VehicleDao();
+		if (vehicleDao.find(vehicle.getLicensePlate()) == null) {
+			vehicle.setIdBrand(getBrand(beanRq).getIdBrand());
+			vehicleDao.insert(vehicle);
+		}
 	}
 
 }

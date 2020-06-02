@@ -39,7 +39,6 @@ public class Utils {
 		Encoder encoder = Base64.getUrlEncoder().withoutPadding();
 		String token = encoder.encodeToString(bytes);
 		return token;
-
 	}
 
 	/**

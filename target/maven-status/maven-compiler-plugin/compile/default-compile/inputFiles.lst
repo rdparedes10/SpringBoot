@@ -5,7 +5,6 @@
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/business/RegisterUserBL.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/info/RequestInfo.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/InsuranceDao.java
-/Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/SpringJDBC.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/model/Location.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/info/StatusInfo.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/ClientHasAccidentDao.java
@@ -17,7 +16,6 @@
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/BaseDao.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/model/Accident.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/utils/Utils.java
-/Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/model/VehicleHasClient.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/constants/MessageConstant.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/SpringConfiguration.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/AdviserDao.java
@@ -25,7 +23,6 @@
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/model/ClientHasAccident.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/SessionDao.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/ClientDao.java
-/Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/VehicleHasClientDao.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/VehicleAndClienteDataDao.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/SpringBootInitServices.java
 /Users/rparedes/Proyectos/Davivienda/Movilidad/colombia-git/workspacePuce/jdbcTemplate2/springBootVehicle/src/main/java/com/todo1/puce/spring/jdbc/dao/AccidentDao.java

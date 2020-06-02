@@ -7,80 +7,68 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.todo1.puce.spring.jdbc.model.Vehicle;
+import com.todo1.puce.spring.jdbc.model.Brand;
 
 /**
  * @author rparedes
  *
  */
-public class BrandDao {
+public class BrandDao extends BaseDao {
 
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public BrandDao() {
+		this.jdbcTemplate = getJdbcTemplate();
 	}
 
-	public List<Vehicle> getListAll() {
+	public List<Brand> getListAll() {
 
-		String sql = "select * from vehicle";
+		String sql = "select * from marca";
 
-		return this.jdbcTemplate.query(sql, new RowMapper<Vehicle>() {
+		return this.jdbcTemplate.query(sql, new RowMapper<Brand>() {
 			@Override
-			public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-				Vehicle v = new Vehicle();
-				v.setChassis(rs.getString("ID"));
-				v.setIdBrand(rs.getString("NAME"));
-				v.setLicensePlate(rs.getString("PRICE"));
-				v.setManufacturingDate(rs.getString("PRICE"));
-				return v;
+			public Brand mapRow(ResultSet rs, int i) throws SQLException {
+				Brand b = new Brand();
+				b.setIdBrand(rs.getString("idMarca"));
+				return b;
 			}
 		});
 	}
 
 	public Integer totalVehicule() {
-		String sql = "select count(*) from vehicle";
+		String sql = "select count(*) from brand";
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 
-	public Vehicle find(Integer id) {
-		String sql = "select * from vehicle where ID = ?";
-		return this.jdbcTemplate.queryForObject(sql, new VehicleRowMapper(), id);
+	public Brand find(String id) {
+		String sql = "select * from marca where idMarca = ?";
+		try {
+			return this.jdbcTemplate.queryForObject(sql, new BrandRowMapper(), id);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
-	public void insert(Vehicle vehicle) {
-		String sql = "insert into vehicle (ID, NAME, PRICE) values (?, ?, ?)";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
-	}
-
-	public void update(Vehicle vehicle) {
-		String sql = "update vehicle set NAME = ?, PRICE = ? where ID = ?";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
+	public void insert(Brand brand) {
+		String sql = "insert into marca (idMarca) values (?)";
+		this.jdbcTemplate.update(sql, brand.getIdBrand());
 	}
 
 	public void delete(String chassis) {
-		String sql = "delete from vehicle where ID = ?";
+		String sql = "delete from marca where idMarca = ?";
 		this.jdbcTemplate.update(sql, chassis);
 	}
 
-	class VehicleRowMapper implements RowMapper<Vehicle> {
+	class BrandRowMapper implements RowMapper<Brand> {
 
-		public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
-			Vehicle v = new Vehicle();
-			v.setChassis(rs.getString("ID"));
-			v.setIdBrand(rs.getString("NAME"));
-			v.setLicensePlate(rs.getString("PRICE"));
-			v.setManufacturingDate(rs.getString("PRICE"));
-			return v;
+		public Brand mapRow(ResultSet rs, int i) throws SQLException {
+			Brand b = new Brand();
+			b.setIdBrand(rs.getString("idMarca"));
+			return b;
 		}
 
 	}

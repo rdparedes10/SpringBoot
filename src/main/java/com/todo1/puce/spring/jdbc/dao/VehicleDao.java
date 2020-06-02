@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -19,56 +17,63 @@ import com.todo1.puce.spring.jdbc.model.Vehicle;
  * @author rparedes
  *
  */
-public class VehicleDao {
+public class VehicleDao extends BaseDao {
 
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public VehicleDao() {
+		this.jdbcTemplate = getJdbcTemplate();
 	}
 
 	public List<Vehicle> getListAll() {
 
-		String sql = "select * from vehicle";
+		String sql = "select * from vehiculo";
 
 		return this.jdbcTemplate.query(sql, new RowMapper<Vehicle>() {
 			@Override
 			public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
 				Vehicle v = new Vehicle();
-				v.setChassis(rs.getString("ID"));
-				v.setIdBrand(rs.getString("NAME"));
-				v.setLicensePlate(rs.getString("PRICE"));
-				v.setManufacturingDate(rs.getString("PRICE"));
+				v.setLicensePlate(rs.getString("placa"));
+				v.setChassis(rs.getString("chasis"));
+				v.setManufacturingDate(rs.getString("fecha_fabricacion"));
+				v.setIdBrand(rs.getString("idMarca"));
+				v.setPhoto(rs.getString("foto"));
+				v.setIdClient(rs.getString("cedulaC"));
+				v.setModel(rs.getString("modelo"));
 				return v;
 			}
 		});
 	}
 
 	public Integer totalVehicule() {
-		String sql = "select count(*) from vehicle";
+		String sql = "select count(*) from vehiculo";
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 
-	public Vehicle find(Integer id) {
-		String sql = "select * from vehicle where ID = ?";
-		return this.jdbcTemplate.queryForObject(sql, new VehicleRowMapper(), id);
+	public Vehicle find(String id) {
+		String sql = "select * from vehiculo where placa = ?";
+		try {
+			return this.jdbcTemplate.queryForObject(sql, new VehicleRowMapper(), id);
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 	public void insert(Vehicle vehicle) {
-		String sql = "insert into vehicle (ID, NAME, PRICE) values (?, ?, ?)";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
+		String sql = "insert into vehiculo (placa, chasis, fecha_fabricacion, idMarca, foto, cedulaC, modelo) values (?, ?, ?, ?, ?, ?, ?)";
+		this.jdbcTemplate.update(sql, vehicle.getLicensePlate(), vehicle.getChassis(), vehicle.getManufacturingDate(),
+				vehicle.getIdBrand(), vehicle.getPhoto(), vehicle.getIdClient(), vehicle.getModel());
 	}
 
 	public void update(Vehicle vehicle) {
-		String sql = "update vehicle set NAME = ?, PRICE = ? where ID = ?";
-		this.jdbcTemplate.update(sql, vehicle.getChassis(), vehicle.getIdBrand(), vehicle.getLicensePlate(),
-				vehicle.getManufacturingDate());
+		String sql = "update vehiculo set placa = ?, chasis = ?, fecha_fabricacion = ?, idMarca = ?, foto = ?, cedulaC = ?, modelo = ? where placa = ?";
+		this.jdbcTemplate.update(sql, vehicle.getLicensePlate(), vehicle.getChassis(), vehicle.getManufacturingDate(),
+				vehicle.getIdBrand(), vehicle.getPhoto(), vehicle.getIdClient(), vehicle.getModel(), vehicle.getLicensePlate());
 	}
 
 	public void delete(String chassis) {
-		String sql = "delete from vehicle where ID = ?";
+		String sql = "delete from vehiculo where placa = ?";
 		this.jdbcTemplate.update(sql, chassis);
 	}
 
@@ -76,10 +81,13 @@ public class VehicleDao {
 
 		public Vehicle mapRow(ResultSet rs, int i) throws SQLException {
 			Vehicle v = new Vehicle();
-			v.setChassis(rs.getString("ID"));
-			v.setIdBrand(rs.getString("NAME"));
-			v.setLicensePlate(rs.getString("PRICE"));
-			v.setManufacturingDate(rs.getString("PRICE"));
+			v.setLicensePlate(rs.getString("placa"));
+			v.setChassis(rs.getString("chasis"));
+			v.setManufacturingDate(rs.getString("fecha_fabricacion"));
+			v.setIdBrand(rs.getString("idMarca"));
+			v.setPhoto(rs.getString("foto"));
+			v.setIdClient(rs.getString("cedulaC"));
+			v.setModel(rs.getString("modelo"));
 			return v;
 		}
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo1.puce.business.ConsultDataBL;
 import com.todo1.puce.business.CreateSessionBL;
 import com.todo1.puce.business.LoginBL;
 import com.todo1.puce.business.RegisterAccidentBL;
@@ -134,6 +135,13 @@ public class JsonController {
 		} else {
 			return getErrorGeneral();
 		}
+	}
+	
+	@GetMapping(path = PathConstant.GET_INSURANCE, produces = "application/json")
+	public @ResponseBody ResponseInfo getInsurance() {
+		ConsultDataBL consultDataBL = new ConsultDataBL();
+		ResponseInfo info = consultDataBL.getTypeInsurance();
+		return info;
 	}
 
 	/**
