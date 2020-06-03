@@ -9,9 +9,26 @@ package com.todo1.puce.spring.info;
  */
 public class ResponseInfo {
 
-	Object params;
+	private Object params;
 
-	StatusInfo statusInfo;
+	private StatusInfo statusInfo;
+	
+	private String email;
+	
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 
 	/**
 	 * @return the statusInfo

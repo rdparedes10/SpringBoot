@@ -144,6 +144,20 @@ public class JsonController {
 		return info;
 	}
 
+	
+	
+	@PostMapping(path = PathConstant.GET_USER_DATA, consumes = "application/json", produces = "application/json")
+	public @ResponseBody ResponseInfo getUserData(@RequestBody RequestInfo beanRq, HttpServletRequest request) {
+
+		if (validateSessionRegister(beanRq.getSessionId())) {
+			ConsultDataBL consultDataBL = new ConsultDataBL();
+			ResponseInfo info = consultDataBL.getUserData(beanRq.getSessionId());
+			return info;
+		} else {
+			return getErrorGeneral();
+		}
+	}
+
 	/**
 	 * Exception Handler
 	 * 

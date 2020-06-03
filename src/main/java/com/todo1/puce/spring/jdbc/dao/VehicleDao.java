@@ -59,6 +59,16 @@ public class VehicleDao extends BaseDao {
 		}
 		
 	}
+	
+	public Vehicle findWithUser(String id) {
+		String sql = "select * from vehiculo where cedulaC = ?";
+		try {
+			return this.jdbcTemplate.queryForObject(sql, new VehicleRowMapper(), id);
+		} catch (Exception e) {
+			return null;
+		}
+		
+	}
 
 	public void insert(Vehicle vehicle) {
 		String sql = "insert into vehiculo (placa, chasis, fecha_fabricacion, idMarca, foto, cedulaC, modelo) values (?, ?, ?, ?, ?, ?, ?)";
